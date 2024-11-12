@@ -6,5 +6,6 @@ public enum CategoryType {
     GAME,
     HEALTH,
     STUDY,
+    FOOD,
     ETC
 }

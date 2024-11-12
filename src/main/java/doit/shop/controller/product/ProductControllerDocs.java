@@ -1,6 +1,7 @@
 package doit.shop.controller.product;
 
 import doit.shop.controller.ListWrapper;
+import doit.shop.controller.PageResponse;
 import doit.shop.controller.product.dto.ProductIdResponse;
 import doit.shop.controller.product.dto.ProductInfoResponse;
 import doit.shop.controller.product.dto.ProductRegisterRequest;
@@ -49,9 +50,9 @@ public interface ProductControllerDocs {
     @Operation(summary = "상품 리스트 조회", description = "상품 리스트를 조회한다.")
     @ApiResponse(responseCode = "200", description = "상품 리스트 조회 성공", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "400", description = "상품 리스트 조회 실패")
-    ListWrapper<ProductInfoResponse> getProductList(
-            @Schema(description = "페이지 번호", example = "1")
-            Long pageNumber,
+    PageResponse<ProductInfoResponse> getProductList(
+            @Schema(description = "페이지 번호", example = "0")
+            Integer pageNumber,
             @Schema(description = "검색어", example = "빼빼로")
             String keyword,
             @Schema(description = "카테고리 식별 ID", example = "1")

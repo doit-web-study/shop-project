@@ -6,8 +6,10 @@ import doit.shop.repository.category.CategoryType;
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class DataLoader {
 
     private final CategoryRepository categoryRepository;
