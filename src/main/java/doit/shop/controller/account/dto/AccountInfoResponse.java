@@ -1,8 +1,11 @@
 package doit.shop.controller.account.dto;
 
+import doit.shop.repository.account.Account;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import lombok.Builder;
 
+@Builder
 public record AccountInfoResponse(
         @Schema(description = "계좌 식별 ID", example = "1")
         Long accountId,
@@ -25,4 +28,15 @@ public record AccountInfoResponse(
         @Schema(description = "계좌 수정일시", example = "2021-01-01T00:00:00")
         LocalDateTime modifiedAt
 ) {
+    public static AccountInfoResponse from(Account account) {
+        return AccountInfoResponse.builder()
+                .accountId(account.getId())
+                .accountName(account.getAccountName())
+                .accountNumber(account.getAccountNumber())
+                .accountBankName(account.getAccountBankName())
+                .accountBalance(account.getAccountBalance())
+                .createdAt(account.getCreatedAt())
+                .modifiedAt(account.getModifiedAt())
+                .build();
+    }
 }

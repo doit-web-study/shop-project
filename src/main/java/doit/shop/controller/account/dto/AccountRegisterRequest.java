@@ -1,5 +1,6 @@
 package doit.shop.controller.account.dto;
 
+import doit.shop.repository.account.Account;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record AccountRegisterRequest(

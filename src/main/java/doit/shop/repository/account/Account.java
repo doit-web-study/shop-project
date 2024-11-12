@@ -1,5 +1,7 @@
 package doit.shop.repository.account;
 
+import doit.shop.controller.account.dto.AccountRegisterRequest;
+import doit.shop.controller.account.dto.AccountUpdateRequest;
 import doit.shop.repository.BaseEntity;
 import doit.shop.repository.user.User;
 import jakarta.persistence.Column;
@@ -40,11 +42,52 @@ public class Account extends BaseEntity {
     private User user;
 
     @Builder
-    public Account(String accountName, String accountNumber, String accountBankName, Integer accountBalance) {
+    private Account(String accountName, String accountNumber, String accountBankName, Integer accountBalance,
+                    User user) {
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.accountBankName = accountBankName;
         this.accountBalance = accountBalance;
+        this.user = user;
     }
 
+    public static Account create(AccountRegisterRequest request, User user) {
+        return Account.builder()
+                .accountName(request.accountName())
+                .accountNumber(request.accountNumber())
+                .accountBankName(request.accountBankName())
+                .accountBalance(0)
+                .user(user)
+                .build();
+    }
+
+    public void checkOwner(User user) {
+        if (!this.user.equals(user)) {
+            throw new IllegalArgumentException("본인의 계좌만 조회할 수 있습니다.");
+        }
+    }
+
+    public void update(AccountUpdateRequest request, User user) {
+        checkOwner(user);
+        this.accountName = request.accountName();
+    }
+
+    public void deposit(Integer amount, User user) {
+        checkOwner(user);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("입금액은 0보다 커야 합니다.");
+        }
+        this.accountBalance += amount;
+    }
+
+    public void withdraw(Integer amount, User user) {
+        checkOwner(user);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("출금액은 0보다 커야 합니다.");
+        }
+        if (this.accountBalance < amount) {
+            throw new IllegalArgumentException("잔액이 부족합니다.");
+        }
+        this.accountBalance -= amount;
+    }
 }

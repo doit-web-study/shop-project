@@ -40,7 +40,7 @@ public interface AccountControllerDocs {
     AccountIdResponse updateAccountInfo(
             @Schema(description = "계좌 식별 ID", example = "1")
             Long accountId,
-            @Schema(description = "계좌 정보 수정", implementation = AccountRegisterRequest.class)
+            @Schema(description = "계좌 정보 수정", implementation = AccountUpdateRequest.class)
             AccountUpdateRequest accountRegisterRequest
     );
 
