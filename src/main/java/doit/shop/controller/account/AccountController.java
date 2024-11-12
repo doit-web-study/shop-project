@@ -34,8 +34,8 @@ public class AccountController implements AccountControllerDocs {
     }
 
     @PutMapping("/{accountId}")
-    public AccountInfoResponse updateAccountInfo(@PathVariable Long accountId,
-                                                 @RequestBody AccountUpdateRequest request) {
+    public AccountIdResponse updateAccountInfo(@PathVariable Long accountId,
+                                               @RequestBody AccountUpdateRequest request) {
         return null;
     }
 

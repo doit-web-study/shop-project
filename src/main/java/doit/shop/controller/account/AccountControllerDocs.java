@@ -37,7 +37,7 @@ public interface AccountControllerDocs {
     @Operation(summary = "계좌 정보 수정", description = "계좌 정보를 수정한다.")
     @ApiResponse(responseCode = "200", description = "계좌 정보 수정 성공")
     @ApiResponse(responseCode = "400", description = "계좌 정보 수정 실패")
-    AccountInfoResponse updateAccountInfo(
+    AccountIdResponse updateAccountInfo(
             @Schema(description = "계좌 식별 ID", example = "1")
             Long accountId,
             @Schema(description = "계좌 정보 수정", implementation = AccountRegisterRequest.class)

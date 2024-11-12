@@ -1,8 +1,9 @@
 package doit.shop.controller.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 
-public record AccountInfoResponse (
+public record AccountInfoResponse(
         @Schema(description = "계좌 식별 ID", example = "1")
         Long accountId,
 
@@ -16,6 +17,12 @@ public record AccountInfoResponse (
         String accountBankName,
 
         @Schema(description = "계좌 잔액", example = "100000")
-        Integer accountBalance
-){
+        Integer accountBalance,
+
+        @Schema(description = "계좌 생성일시", example = "2021-01-01T00:00:00")
+        LocalDateTime createdAt,
+
+        @Schema(description = "계좌 수정일시", example = "2021-01-01T00:00:00")
+        LocalDateTime modifiedAt
+) {
 }
