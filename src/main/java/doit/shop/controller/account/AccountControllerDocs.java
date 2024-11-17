@@ -1,6 +1,5 @@
 package doit.shop.controller.account;
 
-import doit.shop.controller.ListWrapper;
 import doit.shop.controller.account.dto.AccountIdResponse;
 import doit.shop.controller.account.dto.AccountInfoResponse;
 import doit.shop.controller.account.dto.AccountRegisterRequest;
@@ -21,18 +20,10 @@ public interface AccountControllerDocs {
             AccountRegisterRequest accountRegisterRequest
     );
 
-    @Operation(summary = "본인 계좌 리스트 정보 조회", description = "본인 계좌 정보를 리스트의 형태로 조회한다.")
+    @Operation(summary = "본인 계좌 정보 조회", description = "본인 계좌 정보를 조회한다.")
     @ApiResponse(responseCode = "200", description = "계좌 정보 조회 성공", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "400", description = "계좌 정보 조회 실패")
-    ListWrapper<AccountInfoResponse> getAccountList();
-
-    @Operation(summary = "계좌 단건 정보 조회", description = "계좌 정보를 조회한다.")
-    @ApiResponse(responseCode = "200", description = "계좌 정보 조회 성공", useReturnTypeSchema = true)
-    @ApiResponse(responseCode = "400", description = "계좌 정보 조회 실패")
-    AccountInfoResponse getAccountInfo(
-            @Schema(description = "계좌 식별 ID", example = "1")
-            Long accountId
-    );
+    AccountInfoResponse getMyAccount();
 
     @Operation(summary = "계좌 정보 수정", description = "계좌 정보를 수정한다.")
     @ApiResponse(responseCode = "200", description = "계좌 정보 수정 성공")

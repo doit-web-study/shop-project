@@ -8,7 +8,6 @@ import doit.shop.repository.account.Account;
 import doit.shop.repository.account.AccountRepository;
 import doit.shop.repository.user.User;
 import doit.shop.repository.user.UserRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,27 +23,18 @@ public class AccountService {
     public AccountIdResponse registerAccount(AccountRegisterRequest request, Long userId) {
         User user = userRepository.getById(userId);
 
-        Account newAccount = Account.create(request,user);
+        Account newAccount = Account.create(request, user);
         Account savedAccount = accountRepository.save(newAccount);
+        user.registerAccount(savedAccount);
 
         return AccountIdResponse.from(savedAccount);
     }
 
-    public AccountInfoResponse getAccountInfo(Long accountId, Long userId) {
+    public AccountInfoResponse getMyAccountInfo(Long userId) {
         User user = userRepository.getById(userId);
-        Account account = accountRepository.getById(accountId);
-        account.checkOwner(user);
+        Account account = accountRepository.getByUser(user);
 
         return AccountInfoResponse.from(account);
-    }
-
-    public List<AccountInfoResponse> getUsersAccountList(Long userId) {
-        User user = userRepository.getById(userId);
-        List<Account> accountList = accountRepository.getAllByUser(user);
-
-        return accountList.stream()
-                .map(AccountInfoResponse::from)
-                .toList();
     }
 
     public AccountIdResponse updateAccountInfo(Long accountId, AccountUpdateRequest request, Long userId) {

@@ -9,8 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,8 +37,7 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private Integer accountBalance;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "account", optional = false)
     private User user;
 
     @Builder
@@ -62,7 +61,7 @@ public class Account extends BaseEntity {
     }
 
     public void checkOwner(User user) {
-        if (!this.user.equals(user)) {
+        if (!Objects.equals(this.user.getId(), user.getId())) {
             throw new IllegalArgumentException("본인의 계좌만 조회할 수 있습니다.");
         }
     }
@@ -89,5 +88,12 @@ public class Account extends BaseEntity {
             throw new IllegalArgumentException("잔액이 부족합니다.");
         }
         this.accountBalance -= amount;
+    }
+
+    public void decreaseBalance(int accountBalance) {
+        if (this.accountBalance < accountBalance) {
+            throw new IllegalArgumentException("잔액이 부족합니다.");
+        }
+        this.accountBalance -= accountBalance;
     }
 }

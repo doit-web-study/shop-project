@@ -1,6 +1,5 @@
 package doit.shop.controller.account;
 
-import doit.shop.controller.ListWrapper;
 import doit.shop.controller.account.dto.AccountIdResponse;
 import doit.shop.controller.account.dto.AccountInfoResponse;
 import doit.shop.controller.account.dto.AccountRegisterRequest;
@@ -31,15 +30,9 @@ public class AccountController implements AccountControllerDocs {
     }
 
     @GetMapping
-    public ListWrapper<AccountInfoResponse> getAccountList() {
+    public AccountInfoResponse getMyAccount() {
         Long userId = (Long) session.getAttribute("userId");
-        return ListWrapper.of(accountService.getUsersAccountList(userId));
-    }
-
-    @GetMapping("/{accountId}")
-    public AccountInfoResponse getAccountInfo(@PathVariable Long accountId) {
-        Long userId = (Long) session.getAttribute("userId");
-        return accountService.getAccountInfo(accountId, userId);
+        return accountService.getMyAccountInfo(userId);
     }
 
     @PutMapping("/{accountId}")
