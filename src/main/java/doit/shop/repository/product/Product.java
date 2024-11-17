@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,7 +48,7 @@ public class Product extends BaseEntity {
 
     @Builder
     private Product(String name, String description, String image, Integer price, Integer stock, Category category,
-                   User user) {
+                    User user) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -81,8 +82,19 @@ public class Product extends BaseEntity {
     }
 
     public void checkOwner(User user) {
-        if (!this.user.equals(user)) {
+        if (!Objects.equals(this.user.getId(), user.getId())) {
             throw new IllegalArgumentException("해당 상품의 소유자가 아닙니다.");
         }
+    }
+
+    public void decreaseStock(Integer numberOfProduct) {
+        if (stock < numberOfProduct) {
+            throw new IllegalArgumentException("재고가 부족합니다.");
+        }
+        stock -= numberOfProduct;
+    }
+
+    public void addStock(Integer orderedStock) {
+        stock += orderedStock;
     }
 }
